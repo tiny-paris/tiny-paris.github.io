@@ -22,11 +22,11 @@
     <meta name="description" content="不少小伙伴最近在用 ROS &#x2F; ROS2 开发的时候，都碰到一个很现实的问题：新硬件越来越新，但 ROS 往往又和 Ubuntu 20.04 &#x2F; 22.04 这类特定版本绑得比较死，内核、驱动和软件栈之间三角互怼，迟早出问题。 于是我想介绍一种自己用下来觉得还挺顺手的方式：在较新的 Linux 发行版上，用 distrobox 容器来跑 ROS 开发环境。 这样做几个好处很直接">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一种优雅的ROS开发方式：使用distrobox容器">
-<meta property="og:url" content="http://tiny-paris.github.io/2026/04/08/elegant-ros-development-with-distrobox/index.html">
+<meta property="og:url" content="https://tinyparis.top/2026/04/08/elegant-ros-development-with-distrobox/index.html">
 <meta property="og:site_name" content="Cain&#39;s Blog">
 <meta property="og:description" content="不少小伙伴最近在用 ROS &#x2F; ROS2 开发的时候，都碰到一个很现实的问题：新硬件越来越新，但 ROS 往往又和 Ubuntu 20.04 &#x2F; 22.04 这类特定版本绑得比较死，内核、驱动和软件栈之间三角互怼，迟早出问题。 于是我想介绍一种自己用下来觉得还挺顺手的方式：在较新的 Linux 发行版上，用 distrobox 容器来跑 ROS 开发环境。 这样做几个好处很直接">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://tiny-paris.github.io/img/ros-distrobox-cover.png">
+<meta property="og:image" content="https://tinyparis.top/img/ros-distrobox-cover.png">
 <meta property="article:published_time" content="2026-04-08T05:35:00.000Z">
 <meta property="article:modified_time" content="2026-04-08T08:33:08.480Z">
 <meta property="article:author" content="Cain">
@@ -35,7 +35,7 @@
 <meta property="article:tag" content="ROS">
 <meta property="article:tag" content="distrobox">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://tiny-paris.github.io/img/ros-distrobox-cover.png">
+<meta name="twitter:image" content="https://tinyparis.top/img/ros-distrobox-cover.png">
   
   
   
@@ -81,7 +81,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"tiny-paris.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"tinyparis.top","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -524,7 +524,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>一种优雅的ROS开发方式：使用distrobox容器</div>
-      <div>http://tiny-paris.github.io/2026/04/08/elegant-ros-development-with-distrobox/</div>
+      <div>https://tinyparis.top/2026/04/08/elegant-ros-development-with-distrobox/</div>
     </div>
     <div class="license-meta">
       
