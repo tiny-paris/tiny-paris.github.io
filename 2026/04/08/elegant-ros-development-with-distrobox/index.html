@@ -19,23 +19,23 @@
   <meta name="author" content="Cain">
   <meta name="keywords" content="">
   
-    <meta name="description" content="苍生无颜，侠为其伸">
+    <meta name="description" content="不少小伙伴最近在用 ROS &#x2F; ROS2 开发的时候，都碰到一个很现实的问题：新硬件越来越新，但 ROS 往往又和 Ubuntu 20.04 &#x2F; 22.04 这类特定版本绑得比较死，内核、驱动和软件栈之间三角互怼，迟早出问题。 于是我想介绍一种自己用下来觉得还挺顺手的方式：在较新的 Linux 发行版上，用 distrobox 容器来跑 ROS 开发环境。 这样做几个好处很直接">
 <meta property="og:type" content="article">
-<meta property="og:title" content="firstblog">
-<meta property="og:url" content="http://tiny-paris.github.io/2026/04/07/firstblog/index.html">
+<meta property="og:title" content="一种优雅的ROS开发方式：使用distrobox容器">
+<meta property="og:url" content="http://tiny-paris.github.io/2026/04/08/elegant-ros-development-with-distrobox/index.html">
 <meta property="og:site_name" content="Cain&#39;s Blog">
-<meta property="og:description" content="苍生无颜，侠为其伸">
+<meta property="og:description" content="不少小伙伴最近在用 ROS &#x2F; ROS2 开发的时候，都碰到一个很现实的问题：新硬件越来越新，但 ROS 往往又和 Ubuntu 20.04 &#x2F; 22.04 这类特定版本绑得比较死，内核、驱动和软件栈之间三角互怼，迟早出问题。 于是我想介绍一种自己用下来觉得还挺顺手的方式：在较新的 Linux 发行版上，用 distrobox 容器来跑 ROS 开发环境。 这样做几个好处很直接">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://tiny-paris.github.io/img/default.jpg">
-<meta property="article:published_time" content="2026-04-07T14:23:51.000Z">
-<meta property="article:modified_time" content="2026-04-08T05:27:38.997Z">
+<meta property="og:image" content="http://tiny-paris.github.io/img/ros-distrobox-cover.png">
+<meta property="article:published_time" content="2026-04-08T05:35:00.000Z">
+<meta property="article:modified_time" content="2026-04-08T07:15:00.141Z">
 <meta property="article:author" content="Cain">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://tiny-paris.github.io/img/default.jpg">
+<meta name="twitter:image" content="http://tiny-paris.github.io/img/ros-distrobox-cover.png">
   
   
   
-  <title>firstblog - Cain&#39;s Blog</title>
+  <title>一种优雅的ROS开发方式：使用distrobox容器 - Cain&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -328,13 +328,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/ros-distrobox-cover.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="firstblog"></span>
+            <span id="subtitle" data-typed-text="一种优雅的ROS开发方式：使用distrobox容器"></span>
           
         </div>
 
@@ -345,8 +345,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-04-07 22:23" pubdate>
-          2026年4月7日 晚上
+        <time datetime="2026-04-08 13:35" pubdate>
+          2026年4月8日 下午
         </time>
       </span>
     
@@ -357,7 +357,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          2.6k 字
         
       </span>
     
@@ -368,7 +368,7 @@
         
         
         
-          1 分钟
+          22 分钟
         
       </span>
     
@@ -407,12 +407,89 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">firstblog</h1>
+            <h1 id="seo-header">一种优雅的ROS开发方式：使用distrobox容器</h1>
             
             
               <div class="markdown-body">
                 
-                
+                <p>不少小伙伴最近在用 ROS &#x2F; ROS2 开发的时候，都碰到一个很现实的问题：新硬件越来越新，但 ROS 往往又和 Ubuntu 20.04 &#x2F; 22.04 这类特定版本绑得比较死，内核、驱动和软件栈之间三角互怼，迟早出问题。</p>
+<p>于是我想介绍一种自己用下来觉得还挺顺手的方式：在较新的 Linux 发行版上，用 <code>distrobox</code> 容器来跑 ROS 开发环境。</p>
+<p>这样做几个好处很直接：</p>
+<ul>
+<li>宿主机可以放心用新发行版，不用为了 ROS 把系统钉死在旧 Ubuntu</li>
+<li>容器里保留 ROS 官方支持更好的 Ubuntu 环境</li>
+<li>新硬件支持更完整，NVIDIA 显卡之类的也能正常用</li>
+<li>开发环境和宿主机隔离，出问题重建也方便</li>
+</ul>
+<p>下面用 <code>Fedora 43</code> + <code>ROS 2 Humble</code> 演示。</p>
+<h2 id="为什么选-distrobox"><a href="#为什么选-distrobox" class="headerlink" title="为什么选 distrobox"></a>为什么选 distrobox</h2><p><code>distrobox</code> 本质上是对容器的进一步封装，底层跑 Podman 或 Docker，但用起来更像是在本机里”多开了一个发行版”。</p>
+<p>对 ROS 开发来说这个思路挺合适的：宿主机跑你喜欢的现代发行版，容器里跑 Ubuntu 22.04 和 <code>ROS 2 Humble</code> 的生态，文件系统、终端、GUI、显卡、开发工具都能自然接进来。比虚拟机轻，比直接装在宿主机上干净。</p>
+<h2 id="安装-distrobox"><a href="#安装-distrobox" class="headerlink" title="安装 distrobox"></a>安装 distrobox</h2><p>Fedora 自带 <code>podman</code>，安装很直接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> dnf install -y git distrobox podman<br></code></pre></td></tr></table></figure>
+
+<p>确认一下两个工具都可用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">podman --version<br>distrobox --version<br></code></pre></td></tr></table></figure>
+
+<p>如果你用的是 Debian &#x2F; Ubuntu 系，可以先装 Docker 再装 Distrobox：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -fsSL https://get.docker.com | sh<br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install -y distrobox<br></code></pre></td></tr></table></figure>
+
+<p>装完把当前用户加入 <code>docker</code> 用户组，省得每次都要 <code>sudo</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> usermod -aG docker <span class="hljs-variable">$USER</span><br>newgrp docker<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置-NVIDIA-容器支持"><a href="#配置-NVIDIA-容器支持" class="headerlink" title="配置 NVIDIA 容器支持"></a>配置 NVIDIA 容器支持</h2><p>如果需要在容器里调用 NVIDIA 显卡——无论是为了 CUDA、cuDNN、ORT，还是只是图形能力——需要额外装一下 NVIDIA 的容器桥接工具。</p>
+<h3 id="1-添加-NVIDIA-官方软件源"><a href="#1-添加-NVIDIA-官方软件源" class="headerlink" title="1. 添加 NVIDIA 官方软件源"></a>1. 添加 NVIDIA 官方软件源</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /etc/yum.repos.d/nvidia-container-toolkit.repo<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-安装工具包"><a href="#2-安装工具包" class="headerlink" title="2. 安装工具包"></a>2. 安装工具包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> dnf install -y nvidia-container-toolkit<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-生成-CDI-配置文件"><a href="#3-生成-CDI-配置文件" class="headerlink" title="3. 生成 CDI 配置文件"></a>3. 生成 CDI 配置文件</h3><p>让 Podman 能正确识别显卡设备：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-验证"><a href="#4-验证" class="headerlink" title="4. 验证"></a>4. 验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nvidia-ctk cdi list<br></code></pre></td></tr></table></figure>
+
+<p>输出里能看到你的 NVIDIA 设备就说明没问题。</p>
+<h2 id="创建-ROS-2-Humble-开发容器"><a href="#创建-ROS-2-Humble-开发容器" class="headerlink" title="创建 ROS 2 Humble 开发容器"></a>创建 ROS 2 Humble 开发容器</h2><p>创建一个带 NVIDIA 支持的 Ubuntu 22.04 容器，顺手把软件源换成清华源：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">distrobox create \<br>  --image ubuntu:22.04 \<br>  --name ros2_humble \<br>  --nvidia \<br>  --init-hooks <span class="hljs-string">&quot;sed -i &#x27;s/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g&#x27; /etc/apt/sources.list &amp;&amp; sed -i &#x27;s/security.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g&#x27; /etc/apt/sources.list&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>进入容器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">distrobox enter ros2_humble<br></code></pre></td></tr></table></figure>
+
+<h2 id="安装-ROS-前的基础依赖"><a href="#安装-ROS-前的基础依赖" class="headerlink" title="安装 ROS 前的基础依赖"></a>安装 ROS 前的基础依赖</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install -y python3-distro python3-yaml python3-pip<br></code></pre></td></tr></table></figure>
+
+<h2 id="用鱼香-ROS-一键安装"><a href="#用鱼香-ROS-一键安装" class="headerlink" title="用鱼香 ROS 一键安装"></a>用鱼香 ROS 一键安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wget http://fishros.com/install -O fishros &amp;&amp; . fishros<br></code></pre></td></tr></table></figure>
+
+<p>跟着脚本走就行。国内网络环境下，这套流程比手动配源逐项装省心不少。</p>
+<p>装完可以跑个小海龟简单测一下。</p>
+<h2 id="在-VS-Code-里接入容器"><a href="#在-VS-Code-里接入容器" class="headerlink" title="在 VS Code 里接入容器"></a>在 VS Code 里接入容器</h2><p>只用终端的话到这里已经够了。如果想要完整的 IDE 体验，可以把 VS Code 直接接到容器里。</p>
+<h3 id="1-启动-Podman-后台服务"><a href="#1-启动-Podman-后台服务" class="headerlink" title="1. 启动 Podman 后台服务"></a>1. 启动 Podman 后台服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl --user <span class="hljs-built_in">enable</span> --now podman.socket<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-安装插件"><a href="#2-安装插件" class="headerlink" title="2. 安装插件"></a>2. 安装插件</h3><p>VS Code 里装 <code>Dev Containers</code> 扩展。</p>
+<h3 id="3-把-Docker-路径改成-Podman"><a href="#3-把-Docker-路径改成-Podman" class="headerlink" title="3. 把 Docker 路径改成 Podman"></a>3. 把 Docker 路径改成 Podman</h3><p>打开设置，搜 <code>docker path</code>，找到：</p>
+<p><code>Dev &gt; Containers: Docker Path</code></p>
+<p>把 <code>docker</code> 改成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">podman<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-连接容器"><a href="#4-连接容器" class="headerlink" title="4. 连接容器"></a>4. 连接容器</h3><p><code>Ctrl + Shift + P</code> 输入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Attach to Running Container<br></code></pre></td></tr></table></figure>
+
+<p>回车后选 <code>ros2_humble</code>，VS Code 会新开一个窗口，左下角显示 <code>Attached Container: ros2_humble</code>。</p>
+<h3 id="5-验证"><a href="#5-验证" class="headerlink" title="5. 验证"></a>5. 验证</h3><p><code>Ctrl + ~</code> 打开集成终端，提示符类似：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yourname@ros2_humble:~$<br></code></pre></td></tr></table></figure>
+
+<p>这样就进去了。</p>
+<h2 id="处理-VS-Code-里用户不对的问题"><a href="#处理-VS-Code-里用户不对的问题" class="headerlink" title="处理 VS Code 里用户不对的问题"></a>处理 VS Code 里用户不对的问题</h2><p>有时候终端里显示的是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@fedora:~#<br></code></pre></td></tr></table></figure>
+
+<p>遇到这种情况，先在容器里以 <code>root</code> 身份执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">usermod -s /bin/bash yourname<br></code></pre></td></tr></table></figure>
+
+<p><code>yourname</code> 换成你实际的用户名。</p>
+<p>然后在 VS Code 远程资源管理器里右键容器，选 <code>Open Container Configuration File</code>，加上：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;updateRemoteUserUID&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;containerUser&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;yourname&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="后续扩展"><a href="#后续扩展" class="headerlink" title="后续扩展"></a>后续扩展</h2><p>这套基础环境跑通之后，<code>CUDA</code>、<code>cuDNN</code>、<code>ONNX Runtime</code> 这些都可以继续往容器里装，宿主机始终保持干净，项目之间也互不干扰。</p>
+<p>总的来说，如果你正被”新硬件 + 老 Ubuntu + ROS 版本绑定”这个组合反复折磨，不妨试试这条路。宿主机用新内核、新驱动，容器里保留 ROS 熟悉的 Ubuntu 环境，折腾一次，后面会省事很多。</p>
+
                 
               </div>
             
@@ -429,8 +506,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>firstblog</div>
-      <div>http://tiny-paris.github.io/2026/04/07/firstblog/</div>
+      <div>一种优雅的ROS开发方式：使用distrobox容器</div>
+      <div>http://tiny-paris.github.io/2026/04/08/elegant-ros-development-with-distrobox/</div>
     </div>
     <div class="license-meta">
       
@@ -442,7 +519,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年4月7日</div>
+          <div>2026年4月8日</div>
         </div>
       
       
@@ -477,12 +554,6 @@
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2026/04/07/hello-world/" title="Hello World">
-                        <span class="hidden-mobile">Hello World</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
