@@ -2,10 +2,10 @@
   --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --motion-fast: 180ms;
   --motion-medium: 420ms;
-  --cursor-glow-size: 42px;
-  --cursor-ring-size: 220px;
-  --cursor-glow-color: rgba(255, 214, 102, 0.22);
-  --cursor-ring-color: rgba(255, 214, 102, 0.08);
+  --cursor-dot-size: 6px;
+  --cursor-ring-size: 24px;
+  --cursor-color: rgba(255, 255, 255, 0.92);
+  --cursor-ring-border: rgba(255, 255, 255, 0.7);
   --motion-shadow: 0 18px 40px rgba(47, 65, 84, 0.12);
 }
 
@@ -25,8 +25,9 @@
   }
 }
 
-body.motion-enabled {
-  cursor: default;
+body.motion-enabled,
+body.motion-enabled * {
+  cursor: none !important;
 }
 
 .cursor-dot,
@@ -36,32 +37,42 @@ body.motion-enabled {
   left: 0;
   pointer-events: none;
   opacity: 0;
-  z-index: 9999;
+  z-index: 99999;
   transform: translate3d(-50%, -50%, 0);
-  transition: opacity var(--motion-fast) ease;
+  transition:
+    opacity var(--motion-fast) ease,
+    width var(--motion-fast) ease,
+    height var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    background-color var(--motion-fast) ease;
 }
 
 .cursor-dot {
-  width: var(--cursor-glow-size);
-  height: var(--cursor-glow-size);
+  width: var(--cursor-dot-size);
+  height: var(--cursor-dot-size);
   border-radius: 999px;
-  background:
-    radial-gradient(circle, rgba(255, 239, 196, 0.9) 0%, rgba(255, 214, 102, 0.55) 35%, rgba(255, 214, 102, 0) 72%);
-  filter: blur(1px);
+  background: var(--cursor-color);
 }
 
 .cursor-ring {
   width: var(--cursor-ring-size);
   height: var(--cursor-ring-size);
   border-radius: 999px;
-  background:
-    radial-gradient(circle, var(--cursor-glow-color) 0%, var(--cursor-ring-color) 45%, rgba(255, 214, 102, 0) 72%);
-  filter: blur(10px);
+  border: 1px solid var(--cursor-ring-border);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(1px);
 }
 
 body.cursor-active .cursor-dot,
 body.cursor-active .cursor-ring {
   opacity: 1;
+}
+
+body.cursor-hover .cursor-ring {
+  width: 34px;
+  height: 34px;
+  border-color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 #board,

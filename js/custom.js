@@ -44,22 +44,20 @@ function initCursorMotion() {
     window.requestAnimationFrame(updateCursor);
   }
 
+  var hoverSelector = 'a, button, input, textarea, select, summary, .nav-link, .index-card, .links .card, .post-content img';
+
   window.addEventListener('mousemove', function (event) {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
     document.body.classList.add('cursor-active');
+
+    var hoverTarget = event.target.closest(hoverSelector);
+    document.body.classList.toggle('cursor-hover', Boolean(hoverTarget));
   }, { passive: true });
 
   window.addEventListener('mouseout', function () {
     document.body.classList.remove('cursor-active');
-  }, { passive: true });
-
-  window.addEventListener('mousedown', function () {
-    dot.style.opacity = '0.75';
-  }, { passive: true });
-
-  window.addEventListener('mouseup', function () {
-    dot.style.opacity = '';
+    document.body.classList.remove('cursor-hover');
   }, { passive: true });
 
   updateCursor();
