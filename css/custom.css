@@ -189,3 +189,57 @@ button:hover {
     opacity: 1;
   }
 }
+
+#waline .wl-md-preview-btn {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.78rem;
+  line-height: 1;
+  padding: 0.22rem 0.48rem;
+}
+
+#waline .wl-md-preview-btn:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+#waline .wl-md-preview-btn.is-active {
+  border-color: rgba(82, 168, 236, 0.95);
+  color: rgba(82, 168, 236, 0.95);
+}
+
+#waline .wl-md-preview-panel {
+  display: none;
+  margin-top: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  background: rgba(10, 16, 28, 0.48);
+  overflow: hidden;
+}
+
+#waline .wl-md-preview-panel.is-visible {
+  display: block;
+}
+
+#waline .wl-md-preview-title {
+  padding: 0.56rem 0.82rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#waline .wl-md-preview-body {
+  padding: 0.84rem 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.94rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+#waline .wl-md-preview-body code {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.08rem 0.3rem;
+}
