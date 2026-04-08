@@ -66,7 +66,13 @@ function initCursorMotion() {
 
 function initRevealMotion() {
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mobileViewport = window.matchMedia('(max-width: 991.98px)').matches;
   if (reducedMotion) {
+    return;
+  }
+
+  // Avoid content flash/hidden issues on mobile and embedded webviews.
+  if (mobileViewport) {
     return;
   }
 
@@ -97,6 +103,13 @@ function initRevealMotion() {
     element.classList.add('motion-fade');
     element.style.setProperty('--motion-delay', Math.min(index * 45, 320) + 'ms');
   });
+
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(function (element) {
+      element.classList.add('is-visible');
+    });
+    return;
+  }
 
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
