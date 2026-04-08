@@ -35,8 +35,8 @@ function initCursorMotion() {
   };
 
   function updateCursor() {
-    ringPos.x += (mouse.x - ringPos.x) * 0.12;
-    ringPos.y += (mouse.y - ringPos.y) * 0.12;
+    ringPos.x += (mouse.x - ringPos.x) * 0.28;
+    ringPos.y += (mouse.y - ringPos.y) * 0.28;
 
     dot.style.transform = 'translate3d(' + mouse.x + 'px, ' + mouse.y + 'px, 0) translate(-50%, -50%)';
     ring.style.transform = 'translate3d(' + ringPos.x + 'px, ' + ringPos.y + 'px, 0) translate(-50%, -50%)';
