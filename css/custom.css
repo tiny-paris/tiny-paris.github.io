@@ -1,3 +1,14 @@
+:root {
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-fast: 180ms;
+  --motion-medium: 420ms;
+  --cursor-glow-size: 42px;
+  --cursor-ring-size: 220px;
+  --cursor-glow-color: rgba(255, 214, 102, 0.22);
+  --cursor-ring-color: rgba(255, 214, 102, 0.08);
+  --motion-shadow: 0 18px 40px rgba(47, 65, 84, 0.12);
+}
+
 @media (min-width: 992px) {
   body.page-home #navbar .navbar-nav .nav-link span {
     display: none;
@@ -11,5 +22,159 @@
   body.page-home #navbar .navbar-nav .nav-link i {
     margin-right: 0;
     font-size: 1.05rem;
+  }
+}
+
+body.motion-enabled {
+  cursor: default;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 9999;
+  transform: translate3d(-50%, -50%, 0);
+  transition: opacity var(--motion-fast) ease;
+}
+
+.cursor-dot {
+  width: var(--cursor-glow-size);
+  height: var(--cursor-glow-size);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(255, 239, 196, 0.9) 0%, rgba(255, 214, 102, 0.55) 35%, rgba(255, 214, 102, 0) 72%);
+  filter: blur(1px);
+}
+
+.cursor-ring {
+  width: var(--cursor-ring-size);
+  height: var(--cursor-ring-size);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, var(--cursor-glow-color) 0%, var(--cursor-ring-color) 45%, rgba(255, 214, 102, 0) 72%);
+  filter: blur(10px);
+}
+
+body.cursor-active .cursor-dot,
+body.cursor-active .cursor-ring {
+  opacity: 1;
+}
+
+#board,
+.index-card,
+.post-content img,
+.note,
+.tagcloud,
+.links .card,
+.about-info,
+.post-content pre,
+.post-content blockquote,
+.post-content table {
+  transition:
+    transform var(--motion-medium) var(--motion-ease),
+    box-shadow var(--motion-medium) var(--motion-ease),
+    border-color var(--motion-fast) ease,
+    background-color var(--motion-fast) ease;
+}
+
+.nav-link,
+.page-link,
+.post-content a,
+.links .card-body,
+.about-icons a,
+.btn,
+button {
+  transition:
+    transform var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    background-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+.index-card:hover,
+.links .card:hover,
+.post-content img:hover,
+.post-content pre:hover,
+.post-content blockquote:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--motion-shadow);
+}
+
+.nav-link:hover,
+.about-icons a:hover,
+.page-link:hover,
+.btn:hover,
+button:hover {
+  transform: translateY(-2px);
+}
+
+.post-content a:not(.btn):hover {
+  text-shadow: 0 0 18px rgba(255, 214, 102, 0.28);
+}
+
+.motion-fade {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 620ms var(--motion-ease),
+    transform 620ms var(--motion-ease);
+  transition-delay: var(--motion-delay, 0ms);
+}
+
+.motion-fade.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-down-bar .scroll-down-arrow {
+  animation: floatArrow 2.6s ease-in-out infinite;
+}
+
+@keyframes floatArrow {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot,
+  .cursor-ring,
+  .motion-fade,
+  .scroll-down-bar .scroll-down-arrow,
+  #board,
+  .index-card,
+  .post-content img,
+  .note,
+  .tagcloud,
+  .links .card,
+  .about-info,
+  .post-content pre,
+  .post-content blockquote,
+  .post-content table,
+  .nav-link,
+  .page-link,
+  .post-content a,
+  .links .card-body,
+  .about-icons a,
+  .btn,
+  button {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .motion-fade {
+    opacity: 1;
   }
 }
