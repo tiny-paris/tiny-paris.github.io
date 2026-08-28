@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>暑假结束前，我 Vibe 了一个 BIT101 MCP</title>
+    <link href="/2026/08/28/vibe-a-bit101-mcp/"/>
+    <url>/2026/08/28/vibe-a-bit101-mcp/</url>
+    
+    <content type="html"><![CDATA[<p>暑假快结束了。</p><p>最近用 BIT101 的时候突然想到，能不能让 Agent 也直接查上面的内容？于是顺手 vibe 了一个 <a href="https://github.com/tiny-paris/BIT101-mcp">BIT101 MCP</a>。</p><p>配置好以后，可以直接让 Agent 总结帖子、搜索资料、查课程和老师评价，也能看看自己的成绩、课表和乐学日历。用起来大概是这样：</p><p><img src="/../img/bit101-mcp-posts.png" alt="总结 BIT101 今日帖子"></p><p><img src="/../img/bit101-mcp-teacher-reviews.png" alt="查询课程和老师评价"></p><p><img src="/../img/bit101-mcp-grades.png" alt="查询成绩"></p><p>目前还是个小项目，不过该有的功能基本都有了。等开学以后，应该还能派上点用场。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>BIT101</tag>
+      
+      <tag>MCP</tag>
+      
+      <tag>Agent</tag>
+      
+      <tag>Vibe Coding</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>一种优雅的ROS开发方式：使用distrobox容器</title>
     <link href="/2026/04/08/elegant-ros-development-with-distrobox/"/>
     <url>/2026/04/08/elegant-ros-development-with-distrobox/</url>
