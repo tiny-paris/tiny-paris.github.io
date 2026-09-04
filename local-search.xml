@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>记录自己第一个开源PR：给Zed加上光标动画</title>
+    <link href="/2026/09/04/zed-cursor-animation-pr/"/>
+    <url>/2026/09/04/zed-cursor-animation-pr/</url>
+    
+    <content type="html"><![CDATA[<p><img src="/../img/zed_cursor_animation.gif" alt="Zed 光标动画演示"></p><p>暑假闲来无事，发现 VS Code 更新了，新的 UI 真的丑啊（）。遂开始寻找新的编辑器，然后发现了用 Rust 编写、采用 GPUI 的 <a href="https://github.com/zed-industries/zed">Zed</a>，感觉挺有意思。</p><p>下载体验之后，装上猫布丁 Blur，改了字体，美化已经万事俱备。结果找遍设置，发现——怎么能没有动画光标呢！</p><p>了解了一下 Zed 的插件机制，发现插件也无法做到。VS Code 因为是 Electron，已经有了 Custom CSS and JS Loader 这个插件，因此可以利用它直接实现光标动画，比如 <a href="https://github.com/LengineerC/vscode-neovide-cursor">vscode-neovide-cursor</a>；Neovim 搭配 Neovide 也原生支持。</p><p>幸好 Zed 是开源的，直接 fork 下来改。因为 Zed 使用 GPUI，想实现光标动画，实际上比在 VS Code 上重新画一层 Canvas 更方便。</p><p>翻了一圈，发现 Zed 已经有 3 个相关 Issue 和 8 个 PR，但之前的 PR 全都被关闭了：有的是没有做好设置开关，有的是维护者担心性能成本。那就默认关闭动画，再在设置说明里提醒性能开销；想用的人只需要在 <code>settings.json</code> 里加上：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;cursor_animation&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><p>这次应该能解决问题吧 🤔</p><p>让 Agent 分析仓库之后，很快就定位到了 Zed 的光标布局和绘制位置。参考已有的动画实现（vscode-neovide-cursor 和 Neovide 源码），加入状态管理、动画绘制和设置项，再经过不断编译、测试、修问题，最后提了 PR。十天之后，<a href="https://github.com/zed-industries/zed/pull/63195">PR #63195</a> 成功合并。</p><p>PR 提上去、准备写博客的时候，我回头看了一眼工作区，突然意识到：自己并不知道这些代码究竟是怎么起作用的。</p><p><strong>也对，其实我根本不会 Rust 啊。</strong></p><p>于是又让 AI 大人解释了一番。按我的理解，大概是：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">Zed 算出光标目标位置<br>        ↓<br>动画模块计算这一帧的四个角<br>        ↓<br>GPUI 把这个多边形画出来<br>        ↓<br>动画没结束就请求下一帧<br></code></pre></td></tr></table></figure><p>真是让人感慨啊。Agent 让我进入了远超自己能力水平的项目；没有 AI，我或许根本不会尝试给一个大型 Rust 项目改功能。现在 Agent 帮我“做到”了，但回头看才发现，“做到”和“理解”根本不是一回事。</p><p>以后还是会继续用 Agent，但也得对应地补基础知识了。AI 时代，行动半径和知识半径增长的速度完全不匹配。</p><p>希望大二这一年，继续保持行动半径，同时让自己的知识半径慢慢赶上来一点吧。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Agent</tag>
+      
+      <tag>Zed</tag>
+      
+      <tag>Rust</tag>
+      
+      <tag>开源</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>BIT101 MCP</title>
     <link href="/2026/08/28/vibe-a-bit101-mcp/"/>
     <url>/2026/08/28/vibe-a-bit101-mcp/</url>

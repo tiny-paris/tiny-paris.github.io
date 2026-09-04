@@ -19,27 +19,27 @@
   <meta name="author" content="Cain">
   <meta name="keywords" content="">
   
-    <meta name="description" content="暑假快结束了，最近用 BIT101 的时候突然想到，能不能让 Agent 也直接查上面的内容？正好 BIT101在github上开源，提供了丰富的接口。于是顺手 vibe 了一个 BIT101 MCP 配置好以后，可以直接让 Agent 总结帖子、搜索资料、查课程和老师评价，也能查看自己的成绩、课表和乐学日历。   提供几张测试图：    祝使用愉快！">
+    <meta name="description" content="暑假闲来无事，发现 VS Code 更新了，新的 UI 真的丑啊（）。遂开始寻找新的编辑器，然后发现了用 Rust 编写、采用 GPUI 的 Zed，感觉挺有意思。 下载体验之后，装上猫布丁 Blur，改了字体，美化已经万事俱备。结果找遍设置，发现——怎么能没有动画光标呢！ 了解了一下 Zed 的插件机制，发现插件也无法做到。VS Code 因为是 Electron，已经有了 Custom CS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BIT101 MCP">
-<meta property="og:url" content="https://tinyparis.top/2026/08/28/vibe-a-bit101-mcp/index.html">
+<meta property="og:title" content="记录自己第一个开源PR：给Zed加上光标动画">
+<meta property="og:url" content="https://tinyparis.top/2026/09/04/zed-cursor-animation-pr/index.html">
 <meta property="og:site_name" content="Cain&#39;s Blog">
-<meta property="og:description" content="暑假快结束了，最近用 BIT101 的时候突然想到，能不能让 Agent 也直接查上面的内容？正好 BIT101在github上开源，提供了丰富的接口。于是顺手 vibe 了一个 BIT101 MCP 配置好以后，可以直接让 Agent 总结帖子、搜索资料、查课程和老师评价，也能查看自己的成绩、课表和乐学日历。   提供几张测试图：    祝使用愉快！">
+<meta property="og:description" content="暑假闲来无事，发现 VS Code 更新了，新的 UI 真的丑啊（）。遂开始寻找新的编辑器，然后发现了用 Rust 编写、采用 GPUI 的 Zed，感觉挺有意思。 下载体验之后，装上猫布丁 Blur，改了字体，美化已经万事俱备。结果找遍设置，发现——怎么能没有动画光标呢！ 了解了一下 Zed 的插件机制，发现插件也无法做到。VS Code 因为是 Electron，已经有了 Custom CS">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tinyparis.top/img/bit101.png">
-<meta property="article:published_time" content="2026-08-28T03:42:10.000Z">
-<meta property="article:modified_time" content="2026-08-28T05:22:15.556Z">
+<meta property="og:image" content="https://tinyparis.top/img/zed_pr.png">
+<meta property="article:published_time" content="2026-09-04T14:50:00.000Z">
+<meta property="article:modified_time" content="2026-09-04T15:10:26.522Z">
 <meta property="article:author" content="Cain">
-<meta property="article:tag" content="AI">
 <meta property="article:tag" content="Agent">
-<meta property="article:tag" content="BIT101">
-<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="Zed">
+<meta property="article:tag" content="开源">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tinyparis.top/img/bit101.png">
+<meta name="twitter:image" content="https://tinyparis.top/img/zed_pr.png">
   
   
   
-  <title>BIT101 MCP - Cain&#39;s Blog</title>
+  <title>记录自己第一个开源PR：给Zed加上光标动画 - Cain&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -332,13 +332,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/bit101.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/zed_pr.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="BIT101 MCP"></span>
+            <span id="subtitle" data-typed-text="记录自己第一个开源PR：给Zed加上光标动画"></span>
           
         </div>
 
@@ -349,8 +349,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-08-28 11:42" pubdate>
-          2026年8月28日 中午
+        <time datetime="2026-09-04 22:50" pubdate>
+          2026年9月4日 晚上
         </time>
       </span>
     
@@ -361,7 +361,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          158 字
+          988 字
         
       </span>
     
@@ -372,7 +372,7 @@
         
         
         
-          2 分钟
+          9 分钟
         
       </span>
     
@@ -411,18 +411,29 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">BIT101 MCP</h1>
+            <h1 id="seo-header">记录自己第一个开源PR：给Zed加上光标动画</h1>
             
             
               <div class="markdown-body">
                 
-                <p>暑假快结束了，最近用 BIT101 的时候突然想到，能不能让 Agent 也直接查上面的内容？正好 <a target="_blank" rel="noopener" href="https://github.com/BIT101-dev/BIT101">BIT101</a>在github上开源，提供了丰富的接口。于是顺手 vibe 了一个 <a target="_blank" rel="noopener" href="https://github.com/tiny-paris/BIT101-mcp">BIT101 MCP</a></p>
-<p>配置好以后，可以直接让 Agent 总结帖子、搜索资料、查课程和老师评价，也能查看自己的成绩、课表和乐学日历。  </p>
-<p>提供几张测试图：</p>
-<p><img src="/../img/bit101-mcp-posts.png" srcset="/img/loading.gif" lazyload alt="总结 BIT101 今日帖子"></p>
-<p><img src="/../img/bit101-mcp-teacher-reviews.png" srcset="/img/loading.gif" lazyload alt="查询课程和老师评价"></p>
-<p><img src="/../img/bit101-mcp-grades.png" srcset="/img/loading.gif" lazyload alt="查询成绩"></p>
-<p>祝使用愉快！</p>
+                <p><img src="/../img/zed_cursor_animation.gif" srcset="/img/loading.gif" lazyload alt="Zed 光标动画演示"></p>
+<p>暑假闲来无事，发现 VS Code 更新了，新的 UI 真的丑啊（）。遂开始寻找新的编辑器，然后发现了用 Rust 编写、采用 GPUI 的 <a target="_blank" rel="noopener" href="https://github.com/zed-industries/zed">Zed</a>，感觉挺有意思。</p>
+<p>下载体验之后，装上猫布丁 Blur，改了字体，美化已经万事俱备。结果找遍设置，发现——怎么能没有动画光标呢！</p>
+<p>了解了一下 Zed 的插件机制，发现插件也无法做到。VS Code 因为是 Electron，已经有了 Custom CSS and JS Loader 这个插件，因此可以利用它直接实现光标动画，比如 <a target="_blank" rel="noopener" href="https://github.com/LengineerC/vscode-neovide-cursor">vscode-neovide-cursor</a>；Neovim 搭配 Neovide 也原生支持。</p>
+<p>幸好 Zed 是开源的，直接 fork 下来改。因为 Zed 使用 GPUI，想实现光标动画，实际上比在 VS Code 上重新画一层 Canvas 更方便。</p>
+<p>翻了一圈，发现 Zed 已经有 3 个相关 Issue 和 8 个 PR，但之前的 PR 全都被关闭了：有的是没有做好设置开关，有的是维护者担心性能成本。那就默认关闭动画，再在设置说明里提醒性能开销；想用的人只需要在 <code>settings.json</code> 里加上：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;cursor_animation&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>这次应该能解决问题吧 🤔</p>
+<p>让 Agent 分析仓库之后，很快就定位到了 Zed 的光标布局和绘制位置。参考已有的动画实现（vscode-neovide-cursor 和 Neovide 源码），加入状态管理、动画绘制和设置项，再经过不断编译、测试、修问题，最后提了 PR。十天之后，<a target="_blank" rel="noopener" href="https://github.com/zed-industries/zed/pull/63195">PR #63195</a> 成功合并。</p>
+<p>PR 提上去、准备写博客的时候，我回头看了一眼工作区，突然意识到：自己并不知道这些代码究竟是怎么起作用的。</p>
+<p><strong>也对，其实我根本不会 Rust 啊。</strong></p>
+<p>于是又让 AI 大人解释了一番。按我的理解，大概是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">Zed 算出光标目标位置<br>        ↓<br>动画模块计算这一帧的四个角<br>        ↓<br>GPUI 把这个多边形画出来<br>        ↓<br>动画没结束就请求下一帧<br></code></pre></td></tr></table></figure>
+
+<p>真是让人感慨啊。Agent 让我进入了远超自己能力水平的项目；没有 AI，我或许根本不会尝试给一个大型 Rust 项目改功能。现在 Agent 帮我“做到”了，但回头看才发现，“做到”和“理解”根本不是一回事。</p>
+<p>以后还是会继续用 Agent，但也得对应地补基础知识了。AI 时代，行动半径和知识半径增长的速度完全不匹配。</p>
+<p>希望大二这一年，继续保持行动半径，同时让自己的知识半径慢慢赶上来一点吧。</p>
 
                 
               </div>
@@ -435,13 +446,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/BIT101/" class="print-no-link">#BIT101</a>
-      
-        <a href="/tags/MCP/" class="print-no-link">#MCP</a>
-      
         <a href="/tags/Agent/" class="print-no-link">#Agent</a>
       
-        <a href="/tags/AI/" class="print-no-link">#AI</a>
+        <a href="/tags/Zed/" class="print-no-link">#Zed</a>
+      
+        <a href="/tags/Rust/" class="print-no-link">#Rust</a>
+      
+        <a href="/tags/%E5%BC%80%E6%BA%90/" class="print-no-link">#开源</a>
       
     </div>
   
@@ -453,8 +464,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>BIT101 MCP</div>
-      <div>https://tinyparis.top/2026/08/28/vibe-a-bit101-mcp/</div>
+      <div>记录自己第一个开源PR：给Zed加上光标动画</div>
+      <div>https://tinyparis.top/2026/09/04/zed-cursor-animation-pr/</div>
     </div>
     <div class="license-meta">
       
@@ -466,7 +477,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年8月28日</div>
+          <div>2026年9月4日</div>
         </div>
       
       
@@ -498,18 +509,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/04/zed-cursor-animation-pr/" title="记录自己第一个开源PR：给Zed加上光标动画">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">记录自己第一个开源PR：给Zed加上光标动画</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/04/08/elegant-ros-development-with-distrobox/" title="一种优雅的ROS开发方式：使用distrobox容器">
-                        <span class="hidden-mobile">一种优雅的ROS开发方式：使用distrobox容器</span>
+                      <a href="/2026/08/28/vibe-a-bit101-mcp/" title="BIT101 MCP">
+                        <span class="hidden-mobile">BIT101 MCP</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
