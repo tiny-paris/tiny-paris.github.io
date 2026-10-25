@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>折腾一下小米手环11的表盘</title>
+    <link href="/2026/10/25/miband11/"/>
+    <url>/2026/10/25/miband11/</url>
+    
+    <content type="html"><![CDATA[<p>自从小米手环把大黑边进化掉之后就想整一个，趁着 19 岁生日成功拿下，先祝自己生日快乐~</p><p>拿到电子设备自然是想折腾一通的，但是由于已经是手机不离身的大学生了，开发快应用感觉没有高中时期那么多需求驱动了（），所以还是从表盘下手吧，美化！</p><p>正好最近看了《上伊那牡丹》，那不如就把 OP MV 改造成随机动态表盘吧🤓☝</p><p>从 OP 里面剪辑了八段画面，让 Astra 写一个实现随机播放片段的<a href="https://github.com/tiny-paris/miband11-shuffle-player">动画播放引擎</a>，再配合一下 Opus 的表盘 UI 设计，实现每次亮屏之后随机播放片段：</p><p><img src="/../img/ui.png" alt="八段随机动态表盘的 UI 效果"></p><p>有意思的是在初次测试中，动画和字体资源是分开的，导致了黑屏，合并到图集之后成功。尚不清楚具体机制，或许可以用 rea 逆向一下？（笑）</p><p>感谢 <a href="https://github.com/AIR-pixel/miband11-watchface-maker">miband11-watchface-maker</a> 和 <a href="https://astrobox.online/">Astrobox</a>。</p><p>另外《上伊那牡丹》真乃百合佳品呐😋</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>杂项</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>记录自己第一个开源PR：给Zed加上光标动画</title>
     <link href="/2026/09/04/zed-cursor-animation-pr/"/>
     <url>/2026/09/04/zed-cursor-animation-pr/</url>
